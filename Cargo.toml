@@ -1,0 +1,25 @@
+[package]
+name = "backuptool"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "backuptool"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+rusqlite = { version = "0.31", features = ["bundled"] }
+sha2 = "0.10"
+walkdir = "2.4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+anyhow = "1.0"
+
+[dev-dependencies]
+tempfile = "3.8"
+
+[[test]]
+name = "integration"
+path = "tests/integration/mod.rs"
