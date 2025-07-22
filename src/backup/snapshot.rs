@@ -65,11 +65,7 @@ impl Snapshot {
         let size = content.len() as u64;
         let content_hash = hash_content(&content);
 
-        // Try to store content - this will be skipped if content already exists
-        let was_deduplicated = match self.db.store_content(&content_hash, &content) {
-            Ok(_) => false, // New content was stored
-            Err(_) => true, // Content already existed (deduplicated)
-        };
+        let was_deduplicated = self.db.store_content(&content_hash, &content)?;
 
         // Always store the file reference, even if content was deduplicated
         self.db.store_content(&content_hash, &content)?;

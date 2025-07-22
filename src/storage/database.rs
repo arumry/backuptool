@@ -87,7 +87,7 @@ impl Database {
         Ok(snapshot_id)
     }
 
-    pub fn store_content(&self, hash: &str, content: &[u8]) -> Result<()> {
+    pub fn store_content(&self, hash: &str, content: &[u8]) -> Result<bool> {
         // Only insert if content doesn't already exist
         let exists: bool = self.conn.query_row(
             "SELECT 1 FROM content_blocks WHERE hash = ?1",
@@ -102,7 +102,7 @@ impl Database {
             )?;
         }
 
-        Ok(())
+        Ok(exists)
     }
 
     pub fn add_file_to_snapshot(&self, snapshot_id: u32, path: &str, content_hash: &str, size: u64) -> Result<()> {
